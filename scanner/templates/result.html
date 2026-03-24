@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+</head>
+<body style="text-align:center; margin-top:100px;">
+
+{% if error %}
+    <h2>{{ error }}</h2>
+
+{% elif status == 'exists' %}
+    <h1 style="color:red; font-size:50px;">❌ Already Claimed</h1>
+    <h2>{{ username }}</h2>
+
+{% elif status == 'new' %}
+    <h1 style="color:green; font-size:50px;">✅ Give Gift</h1>
+    <h2>{{ username }}</h2>
+
+{% endif %}
+
+<br><br>
+<a href="/">⬅ Scan Next</a>
+
+</body>
+</html>

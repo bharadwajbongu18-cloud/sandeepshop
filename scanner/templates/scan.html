@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scan QR</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<h2>Scan Instagram QR</h2>
+
+<a href="/export/">
+    <button style="padding:10px; font-size:16px; margin-bottom:20px;">
+        📥 Download Excel
+    </button>
+</a>
+<body style="text-align:center;">
+
+<h2>Scan Instagram QR</h2>
+
+<div id="reader" style="width:350px; margin:auto;"></div>
+
+<form method="POST" action="/process/">
+    {% csrf_token %}
+    <input type="hidden" name="qr_data" id="qr_data">
+</form>
+
+<script>
+function onScanSuccess(decodedText) {
+    document.getElementById('qr_data').value = decodedText;
+    document.forms[0].submit();
+}
+
+// IMPORTANT SETTINGS (this is the fix)
+let html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader",
+    {
+        fps: 10,
+        qrbox: { width: 300, height: 300 },
+        aspectRatio: 1.0,
+        rememberLastUsedCamera: true
+    }
+);
+
+html5QrcodeScanner.render(onScanSuccess);
+</script>
+
+</body>
+</html>
