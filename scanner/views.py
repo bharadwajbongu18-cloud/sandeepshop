@@ -25,6 +25,7 @@ def process_qr(request):
         return render(request, 'result.html', {'error': 'Invalid profile link'})
 
     username = path.split('/')[0]   # always gets correct username
+    print("EXTRACTED USERNAME:",username)
 
     # 🔴 Check duplicate
     if Claim.objects.filter(username=username).exists():
