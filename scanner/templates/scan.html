@@ -21,11 +21,22 @@
     {% csrf_token %}
     <input type="hidden" name="qr_data" id="qr_data">
 </form>
-
 <script>
 function onScanSuccess(decodedText) {
-    document.getElementById('qr_data').value = decodedText;
-    document.forms[0].submit();
+    console.log("Scanned:", decodedText);
+
+    fetch("/process/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: "qr_data=" + encodeURIComponent(decodedText)
+    })
+    .then(response => response.text())
+    .then(html => {
+        document.body.innerHTML = html;
+    });
 }
 
 // IMPORTANT SETTINGS (this is the fix)
